@@ -55,6 +55,15 @@ class _SearchPageState extends State<SearchPage> {
                       isDense: true,
                     )
                   ]
+                ),
+                Visibility(
+                  visible: sortByValue == "distance",
+                  child: Row(
+                    children: [
+                      Text("Current Location: "),
+                      Text(userLocation.address, style: TextStyle(fontSize: 10))
+                    ]
+                  )
                 )
               ]
             )
