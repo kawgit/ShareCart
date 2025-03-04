@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import 'package:share_cart_flutter/scaffold.dart';
+import 'package:share_cart_flutter/scaffold_page.dart';
 
 class LoginPage extends StatefulWidget{
   const LoginPage({super.key});

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share_cart_flutter/types.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -6,42 +7,41 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+
+  List<Item> items = List<Item>.from(exampleItems);
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
         children: [
-          ListView(
-            children: [
-              Material(
-                child: ListTile(
-                  leading: Icon(Icons.local_pizza),
-                  title: Text("Pizza"),
-                  trailing: Text("\$5.99"),
-                )
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Query'
               ),
-              Material(
-                child: ListTile(
-                  leading: Icon(Icons.apple),
-                  title: Text("Apple"),
-                  trailing: Text("\$0.99"),
-                )
-              ),
-              Material(
-                child: ListTile(
-                  leading: Icon(Icons.icecream),
-                  title: Text("Ice cream"),
-                  trailing: Text("\$3.99"),
-                )
-              ),
-              Material(
-                child: ListTile(
-                  leading: Icon(Icons.egg),
-                  title: Text("Eggs"),
-                  trailing: Text("\$19.99"),
-                )
-              ),
-            ],
+              onChanged: (value) {
+                setState(() {
+                  items = exampleItems.where((item) {
+                    String valueLower = value.toLowerCase();
+                    return item.name.toLowerCase().contains(valueLower)
+                      || item.description.toLowerCase().contains(valueLower)
+                      || item.category.toLowerCase().contains(valueLower);
+                  }).toList();
+                });
+              },
+            )
+          ),
+          Expanded(
+            child: ListView(
+              children: items.map((item) => ListTile(
+                title: Text(item.name),
+                subtitle: Text(item.category),
+                trailing: Text("\$${item.price}"),
+              )).toList()
+            )
           )
         ]
       )
