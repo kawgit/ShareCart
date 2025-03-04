@@ -37,7 +37,7 @@ class _SearchPageState extends State<SearchPage> {
                   },
                 ),
                 Row(
-                  children: [ // TODO: Implement location selector to sort by distance
+                  children: [
                     Text("Sort by "),
                     DropdownButton<String>(
                       value: sortByValue,
@@ -61,7 +61,7 @@ class _SearchPageState extends State<SearchPage> {
                   child: Row(
                     children: [
                       Text("Current Location: "),
-                      Text(userLocation.address, style: TextStyle(fontSize: 10))
+                      Text(userLocation.address, style: TextStyle(fontSize: 10)) // TODO: Implement location selector to change user location
                     ]
                   )
                 )
