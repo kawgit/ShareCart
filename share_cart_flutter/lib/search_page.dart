@@ -26,9 +26,7 @@ class _SearchPageState extends State<SearchPage> {
                 setState(() {
                   items = exampleItems.where((item) {
                     String valueLower = value.toLowerCase();
-                    return item.name.toLowerCase().contains(valueLower)
-                      || item.description.toLowerCase().contains(valueLower)
-                      || item.category.toLowerCase().contains(valueLower);
+                    return item.name.toLowerCase().contains(valueLower) || item.keywords.any((keyword) => keyword.toLowerCase().contains(valueLower));
                   }).toList();
                 });
               },
@@ -38,7 +36,7 @@ class _SearchPageState extends State<SearchPage> {
             child: ListView(
               children: items.map((item) => ListTile(
                 title: Text(item.name),
-                subtitle: Text(item.category),
+                subtitle: Text(item.keywords.join(", ")),
                 trailing: Text("\$${item.price}"),
               )).toList()
             )
