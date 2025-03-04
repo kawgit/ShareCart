@@ -7,6 +7,7 @@ class ScaffoldPage extends StatefulWidget {
 }
 
 class _ScaffoldPageState extends State<ScaffoldPage> {
+  final PageController _pageController = PageController();
   
   final List<Widget> pages = [
     Center(child: Text('Home Page')),
@@ -21,23 +22,28 @@ class _ScaffoldPageState extends State<ScaffoldPage> {
   ];
   
   int pageIndex = 0;
-  String pageTitle = "";
 
   @override
   Widget build(BuildContext context) {
-
-    pageTitle = pageTitles[pageIndex];
-
     return Scaffold(
-      appBar: AppBar(title: Text(pageTitle), backgroundColor: Theme.of(context).colorScheme.secondary),
-      body: pages[pageIndex],
+      appBar: AppBar(title: Text(pageTitles[pageIndex]), backgroundColor: Theme.of(context).colorScheme.secondary),
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (int newIndex) {
+          setState(() {
+            pageIndex = newIndex;
+          });
+        },
+        children: pages,
+      ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: pageIndex,
         onDestinationSelected: (int newPageIndex) {
-          setState(() {
-            pageIndex = newPageIndex;
-            pageTitle = pageTitles[pageIndex];
-          });
+          _pageController.animateToPage(
+            newPageIndex,
+            duration: Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          );
         },
         destinations: [
           NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
